@@ -1,12 +1,170 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><title>Frais Kilométriques - Service Express</title></head>
-<body style="background:#020617; color:#fff; font-family:sans-serif; text-align:center; padding:50px;">
-  <a href="https://service-express.org" style="color:#94a3b8; text-decoration:none;">← Retour au portail</a>
-  <h1>🚗 Frais <span>Kilométriques</span></h1>
-  <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:20px; max-width:400px; margin:20px auto;">
-    <label>KM annuels</label><br><input type="number" id="k" oninput="c()" style="padding:10px; width:100%; border-radius:10px;"><br><br>
-    <div id="r" style="font-size:24px; color:#fb923c;">0 € réductibles</div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculateur Frais Kilométriques 2026 – Barème Fiscal Officiel | Service Express</title>
+  <meta name="description" content="Calculez vos frais kilométriques déductibles selon le barème fiscal 2026. Puissance fiscale, kilométrage annuel, indemnités précises. Gratuit et instantané.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://frais-km.service-express.org/">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1805732481707409" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#04050f;--surface:rgba(255,255,255,0.05);--border:rgba(255,255,255,0.09);--purple:#a78bfa;--purple-dim:#818cf8;--accent:#7c3aed;--text:#e8eaf6;--muted:#7c85a8;--green:#34d399;--amber:#fbbf24;--red:#f87171;--blue:#60a5fa;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 16px 60px;}
+    body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 55% 45% at 20% 20%,rgba(99,60,180,.15) 0%,transparent 70%),radial-gradient(ellipse 45% 55% at 80% 80%,rgba(30,200,150,.08) 0%,transparent 70%);pointer-events:none;}
+    .wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0 24px;border-bottom:1px solid var(--border);margin-bottom:36px;}
+    .nav-brand{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--purple);text-decoration:none;}
+    .nav-back{font-size:13px;color:var(--muted);text-decoration:none;}
+    .nav-back:hover{color:var(--purple);}
+    .hero{text-align:center;margin-bottom:32px;}
+    .hero h1{font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,40px);font-weight:800;margin-bottom:8px;}
+    .hero h1 span{color:var(--purple);}
+    .hero p{font-size:15px;color:var(--muted);}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:20px;}
+    .card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--purple);margin-bottom:20px;}
+    .field{margin-bottom:20px;}
+    .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:500;}
+    input[type=number],input[type=range],select{width:100%;}
+    input[type=number],select{padding:12px 16px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:15px;outline:none;font-family:'DM Sans',sans-serif;transition:border-color .2s;}
+    input[type=number]:focus,select:focus{border-color:var(--purple);}
+    select option{background:#1a1a2e;}
+    input[type=range]{accent-color:var(--purple);margin-top:8px;}
+    .slider-val{text-align:right;font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--purple);margin-top:4px;}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .result-box{background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(109,40,217,.15));border:1px solid rgba(167,139,250,.3);border-radius:20px;padding:32px;text-align:center;margin-bottom:20px;}
+    .result-label{font-size:13px;color:var(--muted);margin-bottom:8px;}
+    .result-val{font-family:'Syne',sans-serif;font-size:clamp(44px,10vw,64px);font-weight:800;color:var(--purple);line-height:1;}
+    .result-sub{font-size:13px;color:var(--muted);margin-top:8px;}
+    .details-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px;}
+    .detail-item{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+    .detail-item .d-label{font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+    .detail-item .d-value{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+    .bareme-table{width:100%;border-collapse:collapse;font-size:13px;}
+    .bareme-table th{background:rgba(167,139,250,.1);color:var(--purple);font-weight:600;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);}
+    .bareme-table td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);}
+    .bareme-table tr.active td{color:var(--text);background:rgba(167,139,250,.08);font-weight:600;}
+    .info-box{background:rgba(96,165,250,.08);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--muted);line-height:1.7;}
+    .info-box strong{color:var(--text);}
+    .seo{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;margin-top:8px;}
+    .seo h2{font-family:'Syne',sans-serif;font-size:18px;color:var(--purple);margin-bottom:12px;}
+    details{border-bottom:1px solid var(--border);padding:12px 0;}
+    details:last-child{border-bottom:none;}
+    summary{cursor:pointer;font-size:14px;font-weight:500;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;}
+    summary::after{content:'▾';font-size:12px;color:var(--muted);}
+    details[open] summary::after{content:'▴';}
+    details p{font-size:13px;color:var(--muted);line-height:1.7;margin-top:10px;}
+    .ad-placeholder{background:rgba(255,255,255,0.05);border:1px dashed rgba(255,255,255,0.1);border-radius:12px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:0.7rem;text-transform:uppercase;min-height:90px;}
+    footer{text-align:center;margin-top:48px;font-size:12px;color:var(--muted);}
+    footer a{color:var(--purple-dim);text-decoration:none;}
+    footer a:hover{text-decoration:underline;}
+    @media(max-width:480px){.row{grid-template-columns:1fr;}.details-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="nav-brand" href="https://service-express.org">⚡ Service Express</a>
+    <a class="nav-back" href="https://service-express.org">← Retour au portail</a>
+  </nav>
+  <div class="hero">
+    <h1>🚗 Frais <span>Kilométriques</span> 2026</h1>
+    <p>Calculez vos indemnités déductibles selon le barème fiscal officiel</p>
   </div>
-  <script>function c(){ let k=document.getElementById('k').value; document.getElementById('r').textContent=Math.round(k*0.4)+' € (est.)';}</script>
-</body></html>
+  <div class="ad-placeholder">Publicité AdSense</div>
+  <div class="card">
+    <div class="card-title">📋 Votre situation</div>
+    <div class="field">
+      <label>Kilométrage professionnel annuel</label>
+      <input type="range" id="km-slider" min="0" max="60000" step="100" value="10000" oninput="syncKm(this.value)">
+      <div class="slider-val" id="km-display">10 000 km</div>
+    </div>
+    <div class="field">
+      <label>Kilométrage précis (km)</label>
+      <input type="number" id="km" value="10000" min="0" step="100" oninput="syncSlider(this.value)">
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Puissance fiscale</label>
+        <select id="cv" onchange="calculate()">
+          <option value="3">3 CV et moins</option>
+          <option value="4">4 CV</option>
+          <option value="5" selected>5 CV</option>
+          <option value="6">6 CV</option>
+          <option value="7">7 CV et plus</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Type de véhicule</label>
+        <select id="type-vehicule" onchange="calculate()">
+          <option value="voiture">Voiture</option>
+          <option value="moto">Moto (&gt; 500 cm³)</option>
+          <option value="moto-small">Moto (≤ 500 cm³)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="result-box">
+    <div class="result-label">Indemnité kilométrique déductible</div>
+    <div class="result-val" id="indemnite">—</div>
+    <div class="result-sub" id="result-sub">—</div>
+    <div class="details-grid">
+      <div class="detail-item"><div class="d-label">Taux appliqué</div><div class="d-value" id="taux-applique">—</div></div>
+      <div class="detail-item"><div class="d-label">Par mois</div><div class="d-value" id="par-mois">—</div></div>
+      <div class="detail-item"><div class="d-label">Tranche</div><div class="d-value" id="tranche">—</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📊 Barème fiscal 2026 — Voitures</div>
+    <table class="bareme-table">
+      <thead><tr><th>Puissance</th><th>≤ 5 000 km</th><th>5 001–20 000 km</th><th>&gt; 20 000 km</th></tr></thead>
+      <tbody>
+        <tr id="row-3"><td>3 CV</td><td>0,529 €/km</td><td>d × 0,316 + 1 065</td><td>0,370 €/km</td></tr>
+        <tr id="row-4"><td>4 CV</td><td>0,606 €/km</td><td>d × 0,340 + 1 330</td><td>0,407 €/km</td></tr>
+        <tr id="row-5"><td>5 CV</td><td>0,636 €/km</td><td>d × 0,357 + 1 395</td><td>0,427 €/km</td></tr>
+        <tr id="row-6"><td>6 CV</td><td>0,665 €/km</td><td>d × 0,374 + 1 457</td><td>0,447 €/km</td></tr>
+        <tr id="row-7"><td>7 CV+</td><td>0,697 €/km</td><td>d × 0,394 + 1 515</td><td>0,470 €/km</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info-box">💡 Ces frais sont déductibles si vous optez pour les <strong>frais réels</strong> au lieu de la déduction forfaitaire de 10%. Conservez un carnet de bord de vos déplacements professionnels.</div>
+  <div class="seo">
+    <h2>FAQ — Frais kilométriques</h2>
+    <details><summary>Quels déplacements sont éligibles ?</summary><p>Les trajets professionnels (visites clients, déplacements entre sites, formations) et dans certaines limites les trajets domicile-travail. Les trajets personnels ne sont pas déductibles.</p></details>
+    <details><summary>Dois-je tenir un carnet de bord ?</summary><p>Oui, il est fortement recommandé de tenir un registre de vos déplacements (date, destination, motif, km) en cas de contrôle fiscal. Une application de suivi kilométrique peut simplifier cette tâche.</p></details>
+    <details><summary>Frais réels vs déduction forfaitaire ?</summary><p>La déduction forfaitaire de 10% est automatique et plafonnée à 14 426 € en 2026. Les frais réels sont plus avantageux si vos frais effectifs dépassent ce forfait. Calculez les deux pour comparer.</p></details>
+    <details><summary>Le barème s'applique-t-il aux véhicules électriques ?</summary><p>Oui, avec un bonus de 20% depuis 2021. Notre calculateur n'intègre pas encore cette majoration — multipliez le résultat par 1,20 si vous avez un véhicule électrique.</p></details>
+  </div>
+  <footer>
+    <p>© 2026 Service Express &nbsp;·&nbsp; <a href="privacy.html">Confidentialité</a> &nbsp;·&nbsp; <a href="legal.html">Mentions Légales</a></p>
+    <p style="margin-top:6px">Barème fiscal officiel 2026. Ne constitue pas un conseil fiscal.</p>
+  </footer>
+</div>
+<script>
+  const BAREME={voiture:{3:{t1:.529,t2:{a:.316,b:1065},t3:.370},4:{t1:.606,t2:{a:.340,b:1330},t3:.407},5:{t1:.636,t2:{a:.357,b:1395},t3:.427},6:{t1:.665,t2:{a:.374,b:1457},t3:.447},7:{t1:.697,t2:{a:.394,b:1515},t3:.470}},moto:{1:{t1:.395,t2:{a:.099,b:1480},t3:.248}},'moto-small':{1:{t1:.272,t2:{a:.064,b:1040},t3:.168}}};
+  function fmt(n){return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);}
+  function syncKm(v){document.getElementById('km').value=v;document.getElementById('km-display').textContent=parseInt(v).toLocaleString('fr-FR')+' km';calculate();}
+  function syncSlider(v){document.getElementById('km-slider').value=v;document.getElementById('km-display').textContent=parseInt(v).toLocaleString('fr-FR')+' km';calculate();}
+  function calculate(){
+    const km=parseInt(document.getElementById('km').value)||0;
+    const cv=parseInt(document.getElementById('cv').value)||5;
+    const type=document.getElementById('type-vehicule').value;
+    const bar=type==='voiture'?BAREME.voiture[cv]:BAREME[type][1];
+    [3,4,5,6,7].forEach(c=>{const r=document.getElementById('row-'+c);if(r)r.classList.toggle('active',c===cv&&type==='voiture');});
+    let ind=0,tranche='',taux='';
+    if(km<=5000){ind=km*bar.t1;tranche='≤ 5 000 km';taux=bar.t1.toFixed(3)+' €/km';}
+    else if(km<=20000){ind=km*bar.t2.a+bar.t2.b;tranche='5 001–20 000';taux='Formule';}
+    else{ind=km*bar.t3;tranche='> 20 000 km';taux=bar.t3.toFixed(3)+' €/km';}
+    document.getElementById('indemnite').textContent=fmt(ind);
+    document.getElementById('result-sub').textContent='Pour '+km.toLocaleString('fr-FR')+' km professionnels';
+    document.getElementById('taux-applique').textContent=taux;
+    document.getElementById('par-mois').textContent=fmt(ind/12);
+    document.getElementById('tranche').textContent=tranche;
+  }
+  calculate();
+</script>
+</body>
+</html>
